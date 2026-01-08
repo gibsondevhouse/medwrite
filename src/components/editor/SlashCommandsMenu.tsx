@@ -124,13 +124,13 @@ export default function SlashCommandsMenu({ editor }: SlashCommandsMenuProps) {
       if (event.key === 'ArrowDown') {
         event.preventDefault()
         setSelectedIndex((prev) => (prev + 1) % commands.length)
-        return true
+        return
       }
 
       if (event.key === 'ArrowUp') {
         event.preventDefault()
         setSelectedIndex((prev) => (prev - 1 + commands.length) % commands.length)
-        return true
+        return
       }
 
       if (event.key === 'Enter') {
@@ -149,13 +149,13 @@ export default function SlashCommandsMenu({ editor }: SlashCommandsMenuProps) {
           command.command()
           setIsOpen(false)
         }
-        return true
+        return
       }
 
       if (event.key === 'Escape') {
         event.preventDefault()
         setIsOpen(false)
-        return true
+        return
       }
     }
 
