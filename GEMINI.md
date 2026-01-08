@@ -1,4 +1,4 @@
-# MedWrite
+# MedWrite Context
 
 ## Project Overview
 
@@ -10,6 +10,8 @@ MedWrite is a local-first, distraction-free Markdown editor designed to mimic th
 -   **Slash Commands:** Quick formatting (e.g., `/h1`, `/img`) similar to Notion/Medium.
 -   **Bubble Menu:** Contextual formatting options (Bold, Italic, etc.) upon text selection.
 -   **Local-First:** Images are handled via Base64 and stored locally within the document context.
+-   **File System:** Native Open/Save dialogs via Electron IPC.
+-   **Custom Window:** Frameless window with custom SVG controls.
 
 ## Architecture
 
@@ -17,52 +19,39 @@ The project adheres to a strict architectural pattern to ensure modularity and s
 
 ### Directory Structure
 -   `src/App.tsx`: **Providers ONLY**. No business logic or layout code.
--   `src/layouts/MainLayout.tsx`: Handles the application shell, including the header and "Zen Mode" toggling.
+-   `src/layouts/MainLayout.tsx`: Handles the application shell, header, window controls, and file I/O orchestration.
 -   `src/components/editor/`: Contains the core editor logic.
-    -   `Editor.tsx`: The main editor component.
-    -   `extensions.ts`: Modular TipTap extensions.
-    -   `BubbleMenu.tsx` & `SlashCommandsMenu.tsx`: UI overlays for the editor.
+    -   `Editor.tsx`: Main editor component. Exposes `EditorRef` (getMarkdown, getTitle, setMarkdown) for parent control.
+    -   `extensions.ts`: Modular TipTap extensions (including `tiptap-markdown`).
+    -   `BubbleMenu.tsx` & `SlashCommandsMenu.tsx`: UI overlays.
 -   `src/electron/`: Electron-specific code.
-    -   `main.ts`: Main process (window management, system integration).
-    -   `preload.ts`: Preload script for secure IPC bridging.
+    -   `main.ts`: Main process. **Compiled to CJS**. Handles IPC (fs, window).
+    -   `preload.ts`: Preload script. **Compiled to CJS**. Exposes `window.electron`.
 
-### Key Principles
--   **Strict Separation:** The renderer (React) has no direct access to Node.js APIs. Communication happens via the preload script.
--   **Modularity:** Editor features are implemented as discrete TipTap extensions.
--   **Styling:** Tailwind CSS (v4) is used for all styling. Global styles are minimal (`src/index.css`).
-
-## Building and Running
-
-### Prerequisites
--   Node.js (v20+)
--   npm
-
-### Commands
-
-*   **Install Dependencies:**
-    ```bash
-    npm install
-    ```
-
-*   **Start Development Server:**
-    ```bash
-    npm run dev
-    ```
-    This starts the Vite dev server and launches the Electron app in development mode.
-
-*   **Build for Production:**
-    ```bash
-    npm run build
-    ```
-    This compiles TypeScript, builds the Vite app, and packages the Electron application into the `release/` directory.
+### Build & Configuration
+-   **Module System:** The project uses `"type": "module"`, BUT Electron scripts (`main`, `preload`) are forced to **CommonJS** (`.cjs`) via `vite.config.ts` (`ssr: true`, `lib` mode). This resolves import/export issues in the Electron sandbox.
+-   **Styling:** Tailwind CSS (v4) with `@tailwindcss/typography`.
+-   **IPC:**
+    -   `fs:save-file`, `fs:read-file`
+    -   `dialog:save-file`, `dialog:open-file`
+    -   `window:minimize`, `window:maximize`, `window:close`
 
 ## Development Conventions
 
--   **State Management:** Prefer local component state (`useState`) or TipTap's internal state. Avoid global state libraries unless absolutely necessary.
--   **Component Structure:** Keep components small and focused. Split complex logic into hooks or utility functions.
--   **Styling:** Use Tailwind utility classes directly in components.
--   **Security:** Maintain context isolation. Do not enable Node integration in the renderer process.
--   **Anti-Patterns:**
-    -   Do not add logic to `App.tsx`.
-    -   Do not mix layout concerns with core editor logic.
-    -   Do not bypass the secure IPC bridge.
+-   **State Management:** Prefer local component state (`useState`) or TipTap's internal state.
+-   **Component Structure:** Keep components small and focused.
+-   **Security:** Context isolation is enabled. No direct Node access in renderer.
+-   **Typography:** Use `prose prose-lg prose-stone max-w-2xl mx-auto` for the editor container.
+-   **Title Handling:** The document title is separate from the body in the UI but saved as the first `# H1` line in the file.
+
+### Commands
+
+*   `npm run dev`: Starts Vite dev server + Electron (Hot Reload).
+*   `npm run build`: `tsc` + `vite build` + `electron-builder`.
+
+## Status (Jan 2026)
+-   ✅ Core Editor (TipTap, Markdown, Slash/Bubble menus)
+-   ✅ File System (Open/Save/SaveAs)
+-   ✅ Window Management (Custom Controls, Drag Region)
+-   ✅ Smart Title (UI field <-> H1 mapping)
+-   ✅ Native Menus (Hidden but active for shortcuts)

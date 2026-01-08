@@ -1,117 +1,69 @@
 # MedWrite
 
-A local-first Markdown Medium editor built with Electron, React, Vite, Tailwind CSS, and TipTap.
+MedWrite is a local-first, distraction-free Markdown editor designed to mimic the fluid writing experience of Medium. Built with Electron, React, Vite, Tailwind CSS, and TipTap.
+
+![MedWrite Screenshot](https://via.placeholder.com/800x500?text=MedWrite+Preview)
 
 ## Features
 
-- **Zen Mode**: Distraction-free writing experience
-- **TipTap Editor**: Rich text editing with Markdown support
-- **Bubble Menu**: Contextual formatting toolbar on text selection
-- **Slash Commands**: Quick formatting with `/h1`, `/h2`, `/img`, etc.
-- **Drag & Drop Images**: Drop images directly into the editor (Base64 encoded)
-- **Modular Architecture**: Clean separation of concerns with strict architectural patterns
+-   **Zen Mode:** A focused, header-less writing environment (`Ctrl+Shift+F`).
+-   **Medium-Style Editing:**
+    -   Slash commands (`/h1`, `/img`, `/code`, etc.).
+    -   Bubble menu for text formatting (Bold, Italic, Link).
+    -   Clean, centered typography.
+-   **Local-First:**
+    -   Full File System access (Open, Save, Save As).
+    -   Real Markdown (`.md`) storage.
+    -   Images stored inline as Base64 (portability).
+-   **Smart Title Management:** Dedicated title field that maps to the document's H1.
+-   **Custom UI:** Frameless window with custom minimize/maximize/close controls.
 
-## Architecture
+## Tech Stack
 
-The application follows a strict architectural pattern to maintain modularity and prevent monolithic code:
+-   **Runtime:** Electron (CommonJS Main/Preload)
+-   **Frontend:** React 19 + Vite
+-   **Styling:** Tailwind CSS 4
+-   **Editor:** TipTap + `tiptap-markdown`
 
-```
-src/
-├── App.tsx                          # Providers ONLY
-├── layouts/
-│   └── MainLayout.tsx               # Shell/Layout logic
-├── components/
-│   └── editor/
-│       ├── Editor.tsx               # Core editor component
-│       ├── BubbleMenu.tsx           # Text highlighting menu
-│       ├── SlashCommandsMenu.tsx    # Slash commands overlay
-│       └── extensions.ts            # Modular TipTap extensions
-└── electron/
-    ├── main.ts                      # Electron main process
-    └── preload.ts                   # Electron preload script
-```
-
-### Key Principles
-
-1. **App.tsx**: Contains only providers, no logic or layout
-2. **MainLayout.tsx**: Handles shell/layout concerns (Zen mode, header, etc.)
-3. **Editor.tsx**: Contains core editor functionality
-4. **extensions.ts**: Modular, reusable TipTap extensions
-5. **Clean Main/Renderer separation**: Proper Electron process isolation
-
-## Getting Started
+## Development
 
 ### Prerequisites
+-   Node.js v20+
+-   npm
 
-- Node.js (v20+)
-- npm or yarn
+### Setup
+1.  Clone the repository.
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
 
-### Installation
-
-```bash
-npm install
-```
-
-### Development
-
-Run the development server:
-
+### Run
+Start the development server (Hot Reload enabled):
 ```bash
 npm run dev
 ```
 
-This will start both Vite dev server and Electron in development mode.
-
 ### Build
-
-Build the application for production:
-
+Package the application for production (creates `.exe`, `.dmg`, or `.AppImage`):
 ```bash
 npm run build
 ```
+Artifacts are output to the `release/` directory.
 
-This will create distributable packages in the `release/` directory.
+## Project Structure
 
-## Usage
+-   `src/components/editor/`: Core editor logic (TipTap extensions, menus).
+-   `src/electron/`: Main process and Preload scripts (Note: Compiled to CJS).
+-   `src/layouts/`: App shell and window controls.
+-   `src/App.tsx`: Provider setup.
 
-### Slash Commands
+## Key Shortcuts
 
-Type `/` anywhere in the editor to open the command menu:
-
-- `/h1` - Large heading
-- `/h2` - Medium heading
-- `/h3` - Small heading
-- `/img` - Insert image (opens file picker)
-- `/bold` - Bold text
-- `/italic` - Italic text
-- `/code` - Code block
-- `/quote` - Block quote
-
-### Bubble Menu
-
-Select any text to see the bubble menu with formatting options:
-- **B** - Bold
-- **I** - Italic
-- **S** - Strikethrough
-- **</>** - Code
-- **H1/H2** - Headings
-
-### Image Handling
-
-Drop image files directly into the editor or use the `/img` slash command. Images are converted to Base64 for local-first storage.
-
-### Zen Mode
-
-Click "Focus Mode" in the header to enter a distraction-free writing environment. Hover over the top-right corner to reveal the "Exit Focus" button.
-
-## Technology Stack
-
-- **Electron**: Desktop application framework
-- **React**: UI library
-- **Vite**: Build tool and dev server
-- **Tailwind CSS**: Utility-first CSS framework
-- **TipTap**: Headless rich text editor
-- **TypeScript**: Type-safe JavaScript
+-   **Save:** `Ctrl + S` / `Cmd + S`
+-   **Open:** `Ctrl + O` / `Cmd + O`
+-   **Zen Mode:** `Ctrl + Shift + F` / `Cmd + Shift + F`
+-   **Slash Menu:** Type `/` at the start of a line.
 
 ## License
 
