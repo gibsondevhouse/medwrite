@@ -1,6 +1,7 @@
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Image from '@tiptap/extension-image'
+import { Markdown } from 'tiptap-markdown'
 import { Extension } from '@tiptap/core'
 import { Plugin, PluginKey } from '@tiptap/pm/state'
 
@@ -117,6 +118,11 @@ export const getEditorExtensions = () => [
   Image.configure({
     inline: true,
     allowBase64: true,
+  }),
+  Markdown.configure({
+    html: false,
+    transformPastedText: true,
+    transformCopiedText: true,
   }),
   SlashCommands,
   ImageDropHandler,

@@ -10,12 +10,36 @@ export default defineConfig({
     react(),
     electron([
       {
-        // Main process entry file
         entry: 'src/electron/main.ts',
+        vite: {
+          build: {
+            ssr: true,
+            lib: {
+              entry: 'src/electron/main.ts',
+              formats: ['cjs'],
+              fileName: () => '[name].cjs',
+            },
+            rollupOptions: {
+              external: ['electron', 'path', 'fs', 'fs/promises', 'os', 'url'],
+            },
+          },
+        },
       },
       {
-        // Preload scripts
         entry: 'src/electron/preload.ts',
+        vite: {
+          build: {
+            ssr: true,
+            lib: {
+              entry: 'src/electron/preload.ts',
+              formats: ['cjs'],
+              fileName: () => '[name].cjs',
+            },
+            rollupOptions: {
+              external: ['electron'],
+            },
+          },
+        },
         onstart(options) {
           options.reload()
         },
