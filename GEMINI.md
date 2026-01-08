@@ -1,8 +1,8 @@
-# MedWrite Context
+# Khuilium Context
 
 ## Project Overview
 
-MedWrite is a local-first, distraction-free Markdown editor designed to mimic the writing experience of Medium. It is built as a desktop application using Electron, React, Vite, Tailwind CSS, and TipTap.
+Khuilium is a local-first, distraction-free Markdown editor designed to mimic the writing experience of Medium. It is built as a desktop application using Electron, React, Vite, Tailwind CSS, and TipTap.
 
 **Key Features:**
 -   **Zen Mode:** A focused, header-less writing environment.

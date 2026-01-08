@@ -9,6 +9,7 @@ dist-electron/
 release/
 out/
 bin/
+.cache/
 
 # TypeScript
 *.tsbuildinfo
@@ -63,7 +64,16 @@ ehthumbs.db
 Thumbs.db
 desktop.ini
 
-# MedWrite Specific
+# Tool Specific
+.gemini*/
+.vite/
+
+# Asset Sources
+*.zip
+*.rar
+*.7z
+
+# Khuilium Specific
 Medium.html
 Medium_files/
 logo.jpg

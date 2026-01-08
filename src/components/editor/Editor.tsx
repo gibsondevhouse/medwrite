@@ -70,7 +70,7 @@ const Editor = forwardRef<EditorRef, EditorProps>(({ initialContent = '', onUpda
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-full text-4xl font-bold text-gray-900 placeholder-gray-300 border-none focus:ring-0 bg-transparent p-0 mb-4 font-serif outline-none"
+          className="w-full text-4xl font-bold text-gray-900 placeholder-gray-300 border-none focus:ring-0 bg-transparent p-0 mb-4 font-['Noe_Display'] outline-none"
         />
       </div>
 

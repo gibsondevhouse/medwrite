@@ -1,7 +1,7 @@
 {
-  "name": "medwrite",
+  "name": "khuilium",
   "version": "1.0.0",
-  "description": "Local-first Markdown Medium editor. Stack: Electron, React, Vite, Tailwind, TipTap. Arch: Strict Shell/Core separation with granular component isolation to prevent monolithic routing. Features: Headless \"Zen\" UI, local persistence, slash commands, bubble-menu formatting, direct .md export, drag/drop Base64 image handling. Optimized for modularity.",
+  "description": "Local-first Markdown editor inspired by Medium. Stack: Electron, React, Vite, Tailwind, TipTap. Arch: Strict Shell/Core separation with granular component isolation to prevent monolithic routing. Features: Headless \"Zen\" UI, local persistence, slash commands, bubble-menu formatting, direct .md export, drag/drop Base64 image handling. Optimized for modularity.",
   "main": "dist-electron/main.cjs",
   "type": "module",
   "scripts": {
@@ -12,8 +12,8 @@
     "electron:build": "vite build && electron-builder"
   },
   "build": {
-    "appId": "com.medwrite.app",
-    "productName": "MedWrite",
+    "appId": "com.khuilium.app",
+    "productName": "Khuilium",
     "directories": {
       "output": "release"
     },
@@ -21,14 +21,10 @@
       "dist/**/*",
       "dist-electron/**/*"
     ],
-    "mac": {
-      "target": "dmg"
-    },
     "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": "AppImage"
+      "target": "dir",
+      "verifyUpdateCodeSignature": false,
+      "sign": null
     }
   },
   "keywords": [],

@@ -51,7 +51,7 @@ export default function MainLayout() {
     let path = currentFilePath
     if (!path) {
       // Suggest filename based on title
-      const defaultPath = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.md'
+      // const defaultPath = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') + '.md'
       path = await window.electron.showSaveDialog() // We might want to pass defaultPath to showSaveDialog if we update the API
     }
 
@@ -99,9 +99,9 @@ export default function MainLayout() {
       {!isZenMode && (
         <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 drag-region">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-semibold text-gray-900">
-              MedWrite
-              {currentFilePath && <span className="text-sm font-normal text-gray-500 ml-2">
+            <h1 className="text-xl font-bold text-gray-900 font-['Noe_Display']">
+              Khuilium
+              {currentFilePath && <span className="text-sm font-normal text-gray-500 ml-2 font-sans">
                 - {currentFilePath.split(/[\\/]/).pop()} {isDirty ? '*' : ''}
               </span>}
             </h1>

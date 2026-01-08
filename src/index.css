@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Noe Display';
+  src: url('./assets/fonts/NoeDisplay-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 /* Global styles for Zen mode */
 body {
   margin: 0;
